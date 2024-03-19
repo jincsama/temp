@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sora.temp.mapper.CommodityMapper">
+    <insert id="saveCommodity">
+        insert into temp.t_commodity(spec, name, price, create_time, update_time) value (#{spec}, #{name}, #{price}, #{createTime}, #{updateTime})
+    </insert>
+    <update id="updateCommodity">
+        update temp.t_commodity
+        <set>
+            <if test="spec != null">spec = #{spec},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="removeCommodity">
+        delete from temp.t_commodity where id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="pageQuery" resultType="com.sora.temp.vo.CommodityStoreVO">
+        SELECT * FROM temp.t_commodity
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sora.temp.mapper.LedgerMapper">
+
+    <select id="pageQuery" resultType="com.sora.temp.vo.LedgerVO">
+        SELECT l.*,(c.price * s.number) as total_price,c.name  FROM temp.t_ledger as l
+        join temp.t_commodity as c on l.commodity_id = c.id
+        join temp.t_commodity_store as s on s.store_id = l.store_id and s.commodity_id = l.commodity_id
+        <where>
+            <if test="name != null">
+                and c.name like concat('%',#{name},'%')
+            </if>
+            <if test="createTime != null">
+                and l.create_time > #{createTime}
+            </if>
+        </where>
+        order by l.create_time desc
+    </select>
+</mapper>

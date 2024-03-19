@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sora.temp.mapper.CommodityStoreMapper">
+
+
+    <update id="updateCommodityStore">
+        update temp.t_commodity_store
+        <set>
+            <if test="commodityId != null">commodity_id = #{commodityId},</if>
+            <if test="storeId != null">store_id = #{storeId},</if>
+            <if test="number != null">number = #{number},</if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
